@@ -61,7 +61,7 @@ CREATE TABLE tags (
 
     # Извлечение данных для таблицы movies ИЗ CSV
     sql_script += "-- Extract data for movies table FROM CSV\n"
-    with open('dataset/movies.csv', 'r', encoding='utf-8') as file:
+    with open('movies.csv', 'r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         for row in reader:
             # Экранирование апострофов
@@ -72,7 +72,7 @@ CREATE TABLE tags (
 
     # Извлечение данных для таблицы users ИЗ TXT
     sql_script += "\n-- Extract data for users table FROM TXT\n"
-    with open('dataset/users.txt', 'r', encoding='utf-8') as file:
+    with open('users.txt', 'r', encoding='utf-8') as file:
         for line in file:
             fields = line.strip().split('|')
             if len(fields) >= 6:
@@ -86,14 +86,14 @@ CREATE TABLE tags (
 
     # Извлечение данных для таблицы ratings ИЗ CSV
     sql_script += "\n-- Extract data for ratings table FROM CSV\n"
-    with open('dataset/ratings.csv', 'r', encoding='utf-8') as file:
+    with open('ratings.csv', 'r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         for i, row in enumerate(reader, 1):
             sql_script += f"INSERT INTO ratings (id, user_id, movie_id, rating, timestamp) VALUES ({i}, {row['userId']}, {row['movieId']}, {row['rating']}, {row['timestamp']});\n"
 
     # Извлечение данных для таблицы tags ИЗ CSV
     sql_script += "\n-- Extract data for tags table FROM CSV\n"
-    with open('dataset/tags.csv', 'r', encoding='utf-8') as file:
+    with open('tags.csv', 'r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         for i, row in enumerate(reader, 1):
             tag = row['tag'].replace("'", "''")
@@ -108,10 +108,10 @@ def main():
     
     # Проверяем существование файлов данных
     required_files = [
-        'dataset/movies.csv',
-        'dataset/users.txt', 
-        'dataset/ratings.csv',
-        'dataset/tags.csv'
+        'movies.csv',
+        'users.txt', 
+        'ratings.csv',
+        'tags.csv'
     ]
     
     for file_path in required_files:
